@@ -23,9 +23,9 @@
 		</div>
 		<div id="navigation">
 			<ul>
-				<li {% if request.path == '/' %}class="current_page_item"{% endif %}><a href="{% url home %}">Home</a></li>
-				<li {% if request.path == '/flats/' %}class="current_page_item"{% endif %}><a href="{% url flats %}">Flats</a></li>
-				<li {% if request.path == '/about/' %}class="current_page_item"{% endif %}><a href="{% url about %}">About</a></li>
+				<li{% if request.path == '/' %} class="current_page_item"{% endif %}><a href="{% url home %}">Home</a></li>
+				<li{% if request.path == '/flats/' %} class="current_page_item"{% endif %}><a href="{% url flats %}">Flats</a></li>
+				<li{% if request.path == '/about/' %} class="current_page_item"{% endif %}><a href="{% url about %}">About</a></li>
    			</ul>
 		</div>
 		<div id="content-wrapper">
