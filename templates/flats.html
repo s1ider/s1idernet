@@ -2,15 +2,15 @@
 
 {% block content %}
     Here will be Dasha's script.
-    {% if request.path == '/flats/' %}
-    <form action="/flats/search" method="post">
+
+    <form action="/flats/search/" method="post">
         {% csrf_token %}
-        <p>
-        {{ form}} 
+      
+        <input type="text" name="search" />
         <input type="submit" value="search" />
-        </p>
+
     </form>
-    {% endif %}
+
     {% if search_text %} <h3> You have searched for '{{ search_text }}'. </h3> {% endif %}
-    <div id="YMapsID" style="width:600px;height:400px"></div>
+    <div id="YMapsID"></div>
 {% endblock %}

@@ -345,3 +345,9 @@ ul#sidenotes li a:active
 	background-color:transparent;
 }
 
+/* Yandex Map */
+#YMapsID {
+    width: 746px;
+    height: 400px;
+}
+
