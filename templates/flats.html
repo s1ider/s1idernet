@@ -1,15 +1,13 @@
 {% extends "base.html" %}
 
 {% block content %}
-    Here will be Dasha's script.
-
+    <div class="fieldset">
     <form action="/flats/search/" method="post">
         {% csrf_token %}
-      
-        <input type="text" name="search" />
+        Search:<input type="text" name="search" class="search" />
         <input type="submit" value="search" />
-
     </form>
+    </div>
 
     {% if search_text %} <h3> You have searched for '{{ search_text }}'. </h3> {% endif %}
     <div id="YMapsID"></div>

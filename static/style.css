@@ -351,3 +351,37 @@ ul#sidenotes li a:active
     height: 400px;
 }
 
+div.fieldset {
+	float: center;
+	padding: 5px;
+	border: none;
+	/*border-color: grey;*/
+}
+
+input.search	{	
+	border: none;
+	border-radius: 10px /* creates rounded edges in some browsers ;
+	/*color: #ffffff /* font color */;*/
+	padding-left: 10px; 
+	width: 300px;
+}
+
+textarea, select, input {
+	color: #667; 
+	padding: 5px; 
+	border: 1px solid #CCC;
+	-webkit-border-radius: 10px; 
+	-moz-border-radius: 10px;
+	border-radius: 10px;
+	-webkit-transition: all 0.4s ease-in-out;
+	-moz-transition: all 0.4s ease-in-out;
+	-o-transition: all 0.4s ease-in-out;
+}
+ 
+input:focus, 
+textarea:focus {        
+    -webkit-box-shadow: #66C 0 0 6px; 
+    -moz-box-shadow: #66C 0 0 6px;
+	box-shadow: #66C 0 0 6px;
+    border-color: #66C; 
+}
