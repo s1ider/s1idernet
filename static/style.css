@@ -361,7 +361,6 @@ div.fieldset {
 input.search	{	
 	/*border: none;*/
 	border-radius: 10px;
-	/*color: #ffffff /* font color */;*/
 	padding-left: 10px; 
 	width: 300px;
 }
@@ -384,4 +383,5 @@ textarea:focus {
     -moz-box-shadow: #66C 0 0 6px;
 	box-shadow: #66C 0 0 6px;
     border-color: #66C; 
+    outline: none;
 }
