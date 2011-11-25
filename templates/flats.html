@@ -10,5 +10,6 @@
     </div>
 
     {% if search_text %} <h3> You have searched for '{{ search_text }}'. </h3> {% endif %}
+    {% if result %} <p/> {{ result }} {% endif %}
     <div id="YMapsID"></div>
 {% endblock %}
