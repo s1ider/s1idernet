@@ -359,8 +359,8 @@ div.fieldset {
 }
 
 input.search	{	
-	border: none;
-	border-radius: 10px /* creates rounded edges in some browsers ;
+	/*border: none;*/
+	border-radius: 10px;
 	/*color: #ffffff /* font color */;*/
 	padding-left: 10px; 
 	width: 300px;
