@@ -3,7 +3,7 @@ from urllib import urlencode,urlopen
 from django.shortcuts import render_to_response
 from django.template.response import TemplateResponse
 from flats.models import SearchHistory
-import simplejson, json
+import json
 
 def search(request):
 	if request.method == 'POST':
