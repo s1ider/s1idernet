@@ -12,7 +12,11 @@
 	            map.setCenter(new YMaps.GeoPoint(30.52, 50.45), 10);
 	        }
 	    </script>
-	{% endif %}    
+	{% endif %}
+    {% if request.path == '/flats/' %}
+    <script language="javascript" type="text/javascript" src="{{ STATIC_URL }}/flot/jquery.js"></script>
+    <script language="javascript" type="text/javascript" src="{{ STATIC_URL }}/flot/jquery.flot.js"></script>
+    {% endif %}
 	<title>Django example</title>
 </head>
 

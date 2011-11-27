@@ -351,6 +351,12 @@ ul#sidenotes li a:active
     height: 400px;
 }
 
+#chart {
+    width: 746px;
+    height: 400px;
+    background-color: #ffffff;
+}
+
 div.fieldset {
 	float: center;
 	padding: 5px;
