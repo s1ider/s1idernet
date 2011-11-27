@@ -3,7 +3,7 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html">	
 	<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}style.css" media="all">
-	{% if request.path == '/flats/' %}
+	{% if request.path == '/maps/' or request.path == '/maps/search/' %}
 		<script src="http://api-maps.yandex.ru/1.1/index.xml?key=ALkUyk4BAAAApRinSwIAS_pBYGgk9hlNbOWvjOx3Zi8VGBIAAAAAAAAAAADG1QihAV-jqGTltsWsd3ylJFXKPw=="
 		type="text/javascript"></script>
 	    <script type="text/javascript">
@@ -24,7 +24,7 @@
 		<div id="navigation">
 			<ul>
 				<li{% if request.path == '/' %} class="current_page_item"{% endif %}><a href="{% url home %}">Home</a></li>
-				<li{% if request.path == '/flats/' or request.path == '/flats/search/' %} class="current_page_item"{% endif %}><a href="{% url flats %}">Flats</a></li>
+				<li{% if request.path == '/maps/' or request.path == '/maps/search/' %} class="current_page_item"{% endif %}><a href="{% url maps %}">Maps</a></li>
 				<li{% if request.path == '/about/' %} class="current_page_item"{% endif %}><a href="{% url about %}">About</a></li>
    			</ul>
 		</div>

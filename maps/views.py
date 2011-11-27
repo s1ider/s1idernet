@@ -1,7 +1,7 @@
 # coding: utf-8
 from urllib import urlencode,urlopen
 from django.template.response import TemplateResponse
-from flats.models import SearchHistory
+from maps.models import SearchHistory
 import json
 
 def search(request):
@@ -21,6 +21,6 @@ def search(request):
 		    result = response[0]['GeoObject']['Point']['pos']
         else:
             result = "Object '%s' was not found." % (search_query)
-	return TemplateResponse(request, 'flats.html', {
+	return TemplateResponse(request, 'maps.html', {
 		'search_text' : search_query,
 		'result' : result})

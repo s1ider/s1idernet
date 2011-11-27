@@ -2,7 +2,7 @@
 
 {% block content %}
     <div class="fieldset">
-    <form action="/flats/search/" method="post">
+    <form action="/maps/search/" method="post">
         {% csrf_token %}
         Search:<input type="text" name="search" class="search" />
         <input type="submit" value="search" />

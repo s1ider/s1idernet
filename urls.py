@@ -9,8 +9,8 @@ from django.contrib import admin
 urlpatterns = patterns('',
     # Examples:
     url(r'^$', TemplateView.as_view(template_name="index.html"), name='home'),
-    url(r'^flats/$', TemplateView.as_view(template_name="flats.html"), name='flats'),
-    url(r'^flats/search/$', 'flats.views.search'),
+    url(r'^maps/$', TemplateView.as_view(template_name="maps.html"), name='maps'),
+    url(r'^maps/search/$', 'maps.views.search'),
     url(r'^about/$', TemplateView.as_view(template_name="about.html"), name='about'),
     # url(r'^s1idernet/', include('s1idernet.foo.urls')),
 
