@@ -4,13 +4,13 @@ from django.views.generic import TemplateView
 
 # Uncomment the next two lines to enable the admin:
 from django.contrib import admin
+from django.conf import settings
 #admin.autodiscover()
 
 urlpatterns = patterns('',
     # Examples:
     url(r'^$', TemplateView.as_view(template_name="index.html"), name='home'),
-    url(r'^maps/$', TemplateView.as_view(template_name="maps.html"), name='maps'),
-    url(r'^maps/search/$', 'maps.views.search'),
+    url(r'^maps/$', 'maps.views.search', name='maps'),
     url(r'^flats/$', TemplateView.as_view(template_name="flats.html"), name='flats'),
     url(r'^about/$', TemplateView.as_view(template_name="about.html"), name='about'),
     # url(r'^s1idernet/', include('s1idernet.foo.urls')),

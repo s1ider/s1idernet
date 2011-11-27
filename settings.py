@@ -8,8 +8,8 @@ TEMPLATE_DEBUG = DEBUG
 ADMINS = (
     # ('Your Name', 'your_email@example.com'),
 )
-
 MANAGERS = ADMINS
+
 
 DATABASES = {
     'default': {
@@ -158,3 +158,6 @@ LOGGING = {
         },
     }
 }
+
+# Yandex API key
+API_KEY = 'ALkUyk4BAAAApRinSwIAS_pBYGgk9hlNbOWvjOx3Zi8VGBIAAAAAAAAAAADG1QihAV-jqGTltsWsd3ylJFXKPw=='

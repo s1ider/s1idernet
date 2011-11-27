@@ -1,5 +1,10 @@
 {% extends 'base.html' %}
 
+{% block head %}
+    <script language="javascript" type="text/javascript" src="{{ STATIC_URL }}/flot/jquery.js"></script>
+    <script language="javascript" type="text/javascript" src="{{ STATIC_URL }}/flot/jquery.flot.js"></script>
+{% endblock %}
+
 {% block content %}
 
     Here will be Dasha's charts.
