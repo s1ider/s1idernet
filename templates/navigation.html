@@ -1,10 +1,11 @@
 {% block navigation %}
 
 <div id="navigation">
-	<ul>
-		<li {% if request.path == '/' %}class="current_page_item"{% endif %}><a href="{% url index %}">Home</a></li>
-		<li {% if request.path == '/maps/' %}class="current_page_item"{% endif %}><a href="{% url flats %}">Flats</a></li>
-		<li {% if request.path == '/about/' %}class="current_page_item"{% endif %}><a href="{% url about %}">About</a></li>
-		</ul>
-</div>
+			<ul>
+				<li{% if request.path == '/' %} class="current_page_item"{% endif %}><a href="{% url home %}">Home</a></li>
+				<li{% if request.path == '/maps/' or request.path == '/maps/search/' %} class="current_page_item"{% endif %}><a href="{% url maps %}">Maps</a></li>
+				<li{% if request.path == '/flats/' %} class="current_page_item"{% endif %}><a href="{% url flats %}">Flats</a></li>
+				<li{% if request.path == '/about/' %} class="current_page_item"{% endif %}><a href="{% url about %}">About</a></li>
+   			</ul>
+		</div>
 {% endblock %}
