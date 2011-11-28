@@ -4,7 +4,6 @@ from django.conf import settings
 from django.template.response import TemplateResponse
 from maps.models import SearchHistory
 import json
-from itertools import chain
 
 def search(request):
     search_query = request.REQUEST.get('search', '')
@@ -28,7 +27,6 @@ def search(request):
             for obj in response:
                 x,y = (obj['GeoObject']['Point']['pos'].split(' '))
                 points.append([float(x), float(y)])
-            result = response[0]['GeoObject']['Point']['pos']
         else:
             result = "Извините, не смогли найти '%s'." % search_query
     print points
