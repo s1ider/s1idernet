@@ -24,11 +24,13 @@ def process_xls():
             prices.append(sh.row_values(rownum))
     except IOError:
         error = "Unable to open file " + prices_local_path
+        return False
 
     buildings = {}
     name = ''
     flats_counter = 0
     for row in prices:
+        print row
         if row[1]:
             buildings[name] = flats_counter
             name = row[1]
@@ -39,7 +41,7 @@ def process_xls():
 
     for building in buildings.keys():
         print building, buildings[building]
-        b = ObjectsHistory(object_name=building, flats_count=buildings[building], date=datetime.now())
+        b = ObjectsHistory(object_name=building, flats_count=buildings[building], date=datetime.now().strftime("%Y-%m-%d"))
         b.save()
 
     return buildings
