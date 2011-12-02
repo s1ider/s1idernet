@@ -16,7 +16,12 @@
     <script type="text/javascript">
         $(function () {
         var data = [];
-        data = [ { label: "Foo", data: [ [10, 1], [17, -14], [30, 5] ] },
+        data = [
+            {
+                label: "Foo",
+                data: [ [10, 1], [17, -14], [30, 5] ],
+                bars: { show : true}
+        },
                  { label: "Bar", data: [ [11, 13], [19, 11], [30, -7] ] } ];
         alert('{{ objects }}');
 {#        var data_objects = {{ objects }};#}
