@@ -1,4 +1,2 @@
 .idea/dataSources.ids .idea/dataSources.xml .idea/encodings.xml .idea/misc.xml .idea/modules.xml .idea/s1idernet.iml .idea/vcs.xml .idea/workspace.xml
 *.pyc
-
-*.pyc
