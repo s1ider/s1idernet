@@ -23,7 +23,7 @@ def process_xls():
         for rownum in range(sh.nrows):
             prices.append(sh.row_values(rownum))
     except IOError:
-        error = "Unable to open file " + filename
+        error = "Unable to open file " + prices_local_path
 
     buildings = {}
     name = ''
