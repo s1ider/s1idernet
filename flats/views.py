@@ -1,13 +1,18 @@
 #coding: utf-8
 import xlrd
 import urllib
+import json
+from re import match
 from django.template.response import TemplateResponse
 from django.conf import settings
-from re import match
+from flats.models import ObjectsHistory
 
 def show_chart(request):
+    return TemplateResponse(request, 'flats.html', {'objects' : json.dumps(process_xls())})
+
+def process_xls():
     prices_local_path = './flats/prices.xls'
-    urllib.urlretrieve(settings.URL_PRICE, prices_local_path)
+#    urllib.urlretrieve(settings.URL_PRICE, prices_local_path)
 
     error = ''
     prices = []
@@ -22,11 +27,12 @@ def show_chart(request):
     objects_list = []
     for row, rownum in prices:
         if match(r'\d',row[0]):
-            objects_list.append((row[1], rownum))
+            current_object = row[1]
+        if row[2] == u'Разом:':
+            objects_list.append((current_object, int(row[5])))
 
+#    for object_name, flats_count in objects_list:
+#        print type(object_name), flats_count
 
-    return TemplateResponse(request, 'flats.html', {
-        'error' :error,
-        })
-
+    return objects_list
 

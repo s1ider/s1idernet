@@ -9,7 +9,7 @@
 
     Here will be Dasha's charts.
 
-    {% if error %}<h4>{{ error }}</h4>{% endif %}
+{#    {% if objects %}<h4>{{ objects }}</h4>{% endif %}#}
 
     <div id="chart"></div>
 
@@ -18,7 +18,8 @@
         var data = [];
         data = [ { label: "Foo", data: [ [10, 1], [17, -14], [30, 5] ] },
                  { label: "Bar", data: [ [11, 13], [19, 11], [30, -7] ] } ];
-
+        alert('{{ objects }}');
+{#        var data_objects = {{ objects }};#}
         $.plot($("#chart"), data);
     }); </script>
 {% endblock %}
