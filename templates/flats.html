@@ -8,6 +8,9 @@
 {% block content %}
 
     Here will be Dasha's charts.
+
+    {% if error %}<h4>{{ error }}</h4>{% endif %}
+
     <div id="chart"></div>
 
     <script type="text/javascript">

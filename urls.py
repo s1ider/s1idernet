@@ -11,7 +11,8 @@ urlpatterns = patterns('',
     # Examples:
     url(r'^$', TemplateView.as_view(template_name="index.html"), name='home'),
     url(r'^maps/$', 'maps.views.search', name='maps'),
-    url(r'^flats/$', TemplateView.as_view(template_name="flats.html"), name='flats'),
+#    url(r'^flats/$', TemplateView.as_view(template_name="flats.html"), name='flats'),
+    url(r'^flats/$', 'flats.views.show_chart', name='flats'),
     url(r'^about/$', TemplateView.as_view(template_name="about.html"), name='about'),
     # url(r'^s1idernet/', include('s1idernet.foo.urls')),
 
