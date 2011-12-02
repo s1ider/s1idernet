@@ -9,10 +9,7 @@ class Flats(models.Model):
 
 class ObjectsHistory(models.Model):
     object_name = models.CharField(max_length=200)
-    one_room_count = models.IntegerField()
-    two_room_count = models.IntegerField()
-    three_room_count = models.IntegerField()
-    four_or_more_room_count = models.IntegerField()
+    flats_count = models.IntegerField()
     date = models.DateField()
 
     def __unicode__(self):
