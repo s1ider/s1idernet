@@ -9,7 +9,7 @@ from django.conf import settings
 from flats.models import ObjectsHistory
 
 def show_chart(request):
-    return TemplateResponse(request, 'flats.html', {'objects' : json.dumps(process_xls())})
+    return TemplateResponse(request, 'flats.html', {'objects' : json.dumps(process_xls()).replace("\"", "\u0022")})
 
 def process_xls():
     prices_local_path = './flats/prices.xls'
@@ -38,11 +38,16 @@ def process_xls():
             flats_counter += 1
     del buildings['']
 
+#    print datetime.today(), datetime.now()
     for building in buildings.keys():
 #        print building, buildings[building]
-        
-        b = ObjectsHistory(object_name=building, flats_count=buildings[building], date=datetime.now().strftime("%Y-%m-%d"))
-        b.save()
+        if not ObjectsHistory.objects.filter(
+                object_name=building,
+                date=datetime.today()
+                ):
+            print "Saving %s" % building
+            b = ObjectsHistory(object_name=building.encode('utf-8'), flats_count=buildings[building], date=datetime.now().strftime("%Y-%m-%d"))
+            b.save()
 
     print ObjectsHistory.objects.all()
 

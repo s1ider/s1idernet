@@ -28,7 +28,7 @@
             }
         ];
         alert('{{ objects }}');
-{#        var data_objects = {{ objects }};#}
+        var data_objects = JSON.parse('{{ objects }}');
         $.plot($("#chart"), data);
     }); </script>
 {% endblock %}

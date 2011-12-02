@@ -13,4 +13,4 @@ class ObjectsHistory(models.Model):
     date = models.DateField()
 
     def __unicode__(self):
-        return u'%s | %s | %s' % (self.object_name, self.flats_count, self.date)
+        return '%s | %s | %s' % (self.object_name, self.flats_count, self.date)
