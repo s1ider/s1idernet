@@ -30,7 +30,6 @@ def process_xls():
     name = ''
     flats_counter = 0
     for row in prices:
-        print row
         if row[1]:
             buildings[name] = flats_counter
             name = row[1]
@@ -40,9 +39,12 @@ def process_xls():
     del buildings['']
 
     for building in buildings.keys():
-        print building, buildings[building]
+#        print building, buildings[building]
+        
         b = ObjectsHistory(object_name=building, flats_count=buildings[building], date=datetime.now().strftime("%Y-%m-%d"))
         b.save()
+
+    print ObjectsHistory.objects.all()
 
     return buildings
 
