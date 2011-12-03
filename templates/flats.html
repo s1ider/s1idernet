@@ -9,10 +9,19 @@
 
     Here will be Dasha's charts.
 
-{#    {% if objects %}<h4>{{ objects }}</h4>{% endif %}#}
+    <table>
+        <tr>
+            <td>Объект</td><td>Осталось квартир</td>
+        </tr>
+        {% for object in objects %}
+        <tr>
+            <td>{{ object.object_name }}</td>
+            <td>{{ object.flats_count }}</td>
+        </tr>
+        {% endfor %}
+    </table>
 
     <div id="chart"></div>
-
     <script type="text/javascript">
     $(function () {
         var data = [];
@@ -27,7 +36,9 @@
                  data: [ [11, 13], [19, 11], [30, -7] ]
             }
         ];
-        var data_objects = JSON.parse('{{ objects|escapejs }}');
+
+{#        var data_objects = JSON.parse('{{ objects|escapejs }}');#}
         $.plot($("#chart"), data);
     }); </script>
+
 {% endblock %}

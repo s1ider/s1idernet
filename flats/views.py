@@ -1,16 +1,16 @@
 #coding: utf-8
 from datetime import datetime
 import xlrd
-import urllib
 import json
-from re import match
 from django.template.response import TemplateResponse
-from django.utils.safestring import mark_safe
-from django.conf import settings
 from flats.models import ObjectsHistory
 
 def show_chart(request):
-    return TemplateResponse(request, 'flats.html', {'objects' : json.dumps(process_xls())})
+    if not ObjectsHistory.objects.filter(date=datetime.now().date()):
+        objects = process_xls()
+    else:
+        objects = ObjectsHistory.objects.order_by('object_name')
+    return TemplateResponse(request, 'flats.html', {'objects' : objects})
 
 def process_xls():
     prices_local_path = './flats/prices.xls'
@@ -47,7 +47,7 @@ def process_xls():
                 date=datetime.today()
                 ):
             print "Saving %s" % building
-            ObjectsHistory.objects.create(object_name=building.encode('utf-8'), flats_count=buildings[building], date=datetime.now().strftime("%Y-%m-%d"))
+            ObjectsHistory.objects.create(object_name=building.encode('utf-8'), flats_count=buildings[building], date=datetime.now().date())
 
     return buildings
     
