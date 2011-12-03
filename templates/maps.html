@@ -11,24 +11,10 @@
             map.addControl(new YMaps.TypeControl());
             map.enableScrollZoom();
 
-{#            var point, response = '{{ result }}';#}
-{#            if (response) {#}
-{#                point = response.split(' ');#}
-{#                map.setCenter(new YMaps.GeoPoint(point[0], point[1]), 15);#}
-{#                var placemark = new YMaps.Placemark(new YMaps.GeoPoint(point[0], point[1]), {hasBalloon:false});#}
-{#                placemark.setIconContent('{{ search_text }}');#}
-{#                map.addOverlay(placemark);#}
-{##}
-{#                YMaps.Events.observe(placemark, placemark.Events.Click, function (map, event) {#}
-{#                });#}
-{#            } else {#}
-{#                point = ['']#}
-{#            }#}
             var points = JSON.parse('{{ points }}');
             if (points) {
                 for (var i=0; i<points.length; i++) {
                     var point = points[i];
-                    alert(point);
                     map.setCenter(new YMaps.GeoPoint(point[0], point[1]), 15);
                     var placemark = new YMaps.Placemark(new YMaps.GeoPoint(point[0], point[1]), {hasBalloon:false});
                     placemark.setIconContent('{{ search_text }}');
