@@ -47,8 +47,7 @@ def process_xls():
                 date=datetime.today()
                 ):
             print "Saving %s" % building
-            b = ObjectsHistory(object_name=building.encode('utf-8'), flats_count=buildings[building], date=datetime.now().strftime("%Y-%m-%d"))
-            b.save()
+            ObjectsHistory.objects.create(object_name=building.encode('utf-8'), flats_count=buildings[building], date=datetime.now().strftime("%Y-%m-%d"))
 
     return buildings
     
