@@ -391,3 +391,7 @@ textarea:focus {
     border-color: #66C; 
     outline: none;
 }
+
+.address_link.active {
+    background-color: #777;
+}

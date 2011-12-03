@@ -1,22 +1,22 @@
 #coding: utf-8
-from datetime import datetime
+from datetime import datetime, date
+import urllib
 import xlrd
-import json
 from django.template.response import TemplateResponse
 from flats.models import ObjectsHistory
 
 def show_chart(request):
-    if not ObjectsHistory.objects.filter(date=datetime.now().date()):
+    if not ObjectsHistory.objects.filter(date=date(2011, 12, 3)):
         objects = process_xls()
     else:
         objects = ObjectsHistory.objects.order_by('object_name')
-    return TemplateResponse(request, 'flats.html', {'objects' : objects})
+    names = set(x.object_name for x in objects)
+    return TemplateResponse(request, 'flats.html', {'objects' : objects, 'names' : names})
 
 def process_xls():
     prices_local_path = './flats/prices.xls'
-#    urllib.urlretrieve(settings.URL_PRICE, prices_local_path)
+    urllib.urlretrieve(settings.URL_PRICE, prices_local_path)
 
-    error = ''
     prices = []
     try:
         book = xlrd.open_workbook(prices_local_path)
@@ -25,6 +25,7 @@ def process_xls():
             prices.append(sh.row_values(rownum))
     except IOError:
         error = "Unable to open file " + prices_local_path
+        print error
         return False
 
     buildings = {}
@@ -50,4 +51,3 @@ def process_xls():
             ObjectsHistory.objects.create(object_name=building.encode('utf-8'), flats_count=buildings[building], date=datetime.now().date())
 
     return buildings
-    

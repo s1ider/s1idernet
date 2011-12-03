@@ -3,25 +3,6 @@
 {% block head %}
     <script language="javascript" type="text/javascript" src="{{ STATIC_URL }}/flot/jquery.js"></script>
     <script language="javascript" type="text/javascript" src="{{ STATIC_URL }}/flot/jquery.flot.js"></script>
-{% endblock %}
-
-{% block content %}
-
-    Here will be Dasha's charts.
-
-    <table>
-        <tr>
-            <td>Объект</td><td>Осталось квартир</td>
-        </tr>
-        {% for object in objects %}
-        <tr>
-            <td>{{ object.object_name }}</td>
-            <td>{{ object.flats_count }}</td>
-        </tr>
-        {% endfor %}
-    </table>
-
-    <div id="chart"></div>
     <script type="text/javascript">
     $(function () {
         var data = [];
@@ -39,6 +20,41 @@
 
 {#        var data_objects = JSON.parse('{{ objects|escapejs }}');#}
         $.plot($("#chart"), data);
-    }); </script>
+
+        var rows = $('#flats_list li a');
+        $('#filter').bind('keyup', function(event) {
+            var text = this.value.toLowerCase(),
+            filter = function(text) {
+                return function() {
+                    var a = $(this);
+                    a.parent()[(a.html().toLowerCase().indexOf(text) == 0 || a.hasClass('active')) ? 'show' : 'hide']();
+                };
+            };
+            rows.each(filter(text));
+        });
+
+        $('.address_link').click(function(event) {
+            event.preventDefault();
+            $(this).toggleClass('active');
+        });
+    });
+
+
+</script>
+{% endblock %}
+
+{% block content %}
+
+    Here will be Dasha's charts.
+
+
+    <div id="chart"></div>
+    <p>&nbsp;</p>
+    <input type="text" id="filter" size="85">
+    <ul id="flats_list">
+        {%  for name in names %}
+        <li><a href="#" class="address_link">{{ name }}</a></li>
+        {% endfor %}
+    </ul>
 
 {% endblock %}
