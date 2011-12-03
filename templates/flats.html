@@ -14,7 +14,7 @@
     <div id="chart"></div>
 
     <script type="text/javascript">
-        $(function () {
+    $(function () {
         var data = [];
         data = [
             {
@@ -27,8 +27,7 @@
                  data: [ [11, 13], [19, 11], [30, -7] ]
             }
         ];
-        alert('{{ objects }}');
-        var data_objects = JSON.parse('{{ objects }}');
+        var data_objects = JSON.parse('{{ objects|escapejs }}');
         $.plot($("#chart"), data);
     }); </script>
 {% endblock %}

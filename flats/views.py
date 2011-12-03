@@ -5,11 +5,12 @@ import urllib
 import json
 from re import match
 from django.template.response import TemplateResponse
+from django.utils.safestring import mark_safe
 from django.conf import settings
 from flats.models import ObjectsHistory
 
 def show_chart(request):
-    return TemplateResponse(request, 'flats.html', {'objects' : json.dumps(process_xls()).replace("\"", "\u0022")})
+    return TemplateResponse(request, 'flats.html', {'objects' : json.dumps(process_xls())})
 
 def process_xls():
     prices_local_path = './flats/prices.xls'
@@ -49,7 +50,5 @@ def process_xls():
             b = ObjectsHistory(object_name=building.encode('utf-8'), flats_count=buildings[building], date=datetime.now().strftime("%Y-%m-%d"))
             b.save()
 
-    print ObjectsHistory.objects.all()
-
     return buildings
-
+    
