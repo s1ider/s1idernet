@@ -29,7 +29,6 @@ def search(request):
                 points.append([float(x), float(y)])
         else:
             result = "Извините, не смогли найти '%s'." % search_query
-    print points
     return TemplateResponse(request, 'maps.html', {
         'API_KEY' : settings.API_KEY,
         'search_text' : search_query[5:],   # remove Киев from search_text

@@ -397,4 +397,4 @@ textarea:focus {
 }
 
 #flats_list li {list-style: none}
-.address_link {padding: 3px; border-radius: 3px}
+.address_link {padding: 3px 6px; border-radius: 3px}

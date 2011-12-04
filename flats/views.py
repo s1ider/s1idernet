@@ -24,7 +24,7 @@ def show_chart(request):
     return TemplateResponse(request, 'flats.html', {'names': names, 'buildings': json.dumps(buildings)})
 
 def process_xls():
-    prices_local_path = './flats/prices.xls'
+    prices_local_path = settings.BASE_DIR + '/flats/prices.xls'
     urllib.urlretrieve(settings.URL_PRICE, prices_local_path)
 
     prices = []
@@ -60,7 +60,6 @@ def process_xls():
         today_date = datetime.today().date()
         if not FlatsNumber.objects.filter(building=Buildings.objects.filter(name=building),
                                           date=today_date):
-            print "Saving %s" % building
             building_model = Buildings.objects.filter(name=building)
             if not building_model:
                 building_model = Buildings.objects.create(name=building)
