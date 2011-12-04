@@ -4,82 +4,119 @@
     <script language="javascript" type="text/javascript" src="{{ STATIC_URL }}/flot/jquery.js"></script>
     <script language="javascript" type="text/javascript" src="{{ STATIC_URL }}/flot/jquery.flot.js"></script>
     <script type="text/javascript">
-    $(function () {
-        var data = [];
-        data = [
-            {
-                label: "Foo",
-                data: [ [10, 1], [17, -14], [30, 5] ],
-                bars: { show : true}
-            },
-            {
-                 label: "Bar",
-                 data: [ [11, 13], [19, 11], [30, -7] ]
-            }
-        ];
-
-        var data_objects = JSON.parse('{{ buildings|escapejs }}');
-        console.log(data_objects);
-
-        var rows = $('#flats_list li a');
-        $('#filter').bind('keyup', function(event) {
-            var text = this.value.toLowerCase(),
-            filter = function(text) {
-                return function() {
-                    var a = $(this);
-                    a.parent()[(a.html().toLowerCase().indexOf(text) == 0 || a.hasClass('active')) ? 'show' : 'hide'](speed=300);
-                };
-            };
-            rows.each(filter(text));
-        });
-
-        $('.address_link').click(function(event) {
-            event.preventDefault();
-            $(this).toggleClass('active');
-        });
-
-        rows.click(plotFlats);
-
-        function plotFlats() {
+        $(function () {
             var data = [];
-            rows.filter('.active').each(function() {
-                var key = $(this).html();
-                console.log(key);
-                if (key && data_objects[key]) {
-                    console.log(data_objects[key]);
-                    var plot_data = {
-                        label: key,
-                        data: prepare_plot_data(data_objects[key]),
-                        bars: { show: true }
-                    };
-                    data.push(plot_data);
+            data = [
+                {
+                    label: "Foo",
+                    data: [
+                        [10, 1],
+                        [17, -14],
+                        [30, 5]
+                    ],
+                    bars: { show : true}
+                },
+                {
+                    label: "Bar",
+                    data: [
+                        [11, 13],
+                        [19, 11],
+                        [30, -7]
+                    ]
                 }
+            ];
+
+            var data_objects = JSON.parse('{{ buildings|escapejs }}');
+            console.log(data_objects);
+
+            var rows = $('#flats_list li a');
+            $('#filter').bind('keyup', function(event) {
+                var text = this.value.toLowerCase(),
+                        filter = function(text) {
+                            return function() {
+                                var a = $(this);
+                                a.parent()[(a.html().toLowerCase().indexOf(text) == 0 || a.hasClass('active')) ? 'show' : 'hide'](speed = 300);
+                            };
+                        };
+                rows.each(filter(text));
             });
 
-            if (data.length > 0) {
-                $.plot($("#chart"), data, {
-                    yaxis: { min: 0 },
-                    xaxis: { tickDecimals: 0 }
+            $('.address_link').click(function(event) {
+                event.preventDefault();
+                $(this).toggleClass('active');
+            });
+
+            rows.click(plotFlats);
+
+            function plotFlats() {
+                var data = [];
+                rows.filter('.active').each(function() {
+                    var key = $(this).html();
+                    console.log(key);
+                    if (key && data_objects[key]) {
+                        console.log(data_objects[key]);
+                        var plot_data = {
+                            label: key,
+                            data: prepare_plot_data(data_objects[key]),
+                            bars: { show: true }
+                        };
+                        data.push(plot_data);
+                    }
                 });
+
+                if (data.length > 0) {
+                    $.plot($("#chart"), data, {
+                        yaxis: { min: 0 },
+                        xaxis: { tickDecimals: 0 },
+                        grid: { hoverable: true}
+                    });
+                }
             }
-        }
 
-        function prepare_plot_data(data) {
-            var prepared_date = [];
+            function prepare_plot_data(data) {
+                var prepared_date = [];
 
-
-            for (var i=0; i<data.length; i++) {
-                prepared_date.push([i, data[i]]);
+                for (var i = 0; i < data.length; i++) {
+                    prepared_date.push([i, data[i]]);
+                }
+                return prepared_date
             }
-            console.log(prepared_date);
-//            prepared_date = [[0, 3], [4, 8], [8, 5], [9, 13]];
-            return prepared_date
-        }
 
-    });
+            function showTooltip(x, y, contents) {
+                $('<div id="tooltip">' + contents + '</div>').css({
+                    position: 'absolute',
+                    display: 'none',
+                    top: y + 5,
+                    left: x + 5,
+                    border: '1px solid #fdd',
+                    padding: '2px',
+                    'background-color': '#fee',
+                    opacity: 0.80
+                }).appendTo("body").fadeIn(200);
+            }
+
+            var previousPoint = null;
+            $("#chart").bind("plothover", function (event, pos, item) {
+                    if (item) {
+                        if (previousPoint != item.dataIndex) {
+                            previousPoint = item.dataIndex;
+
+                            $("#tooltip").remove();
+                            var x = item.datapoint[0].toFixed(2),
+                                y = item.datapoint[1].toFixed(2);
+
+                            showTooltip(item.pageX, item.pageY, Math.round(y));
+                        }
+                    }
+                    else {
+                        $("#tooltip").remove();
+                        previousPoint = null;
+                    }
+            });
+        });
 
 
-</script>
+    </script>
 {% endblock %}
 
 {% block content %}
@@ -91,8 +128,8 @@
     <p>&nbsp;</p>
     <label for="filter"></label><input type="text" id="filter" size="85">
     <ul id="flats_list">
-        {%  for name in names %}
-        <li><a href="#" class="address_link">{{ name }}</a></li>
+        {% for name in names %}
+            <li><a href="#" class="address_link">{{ name }}</a></li>
         {% endfor %}
     </ul>
 
