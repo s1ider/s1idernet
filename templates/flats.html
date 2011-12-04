@@ -64,6 +64,8 @@
                     }
                 });
 
+                $("#chart").show()
+
                 if (data.length > 0) {
                     $.plot($("#chart"), data, {
                         yaxis: { min: 0 , tickDecimals: 0},
@@ -124,7 +126,7 @@
     Here will be Dasha's charts.
 
 
-    <div id="chart"></div>
+    <div id="chart" style="display: none"></div>
     <p>&nbsp;</p>
     <label for="filter"></label><input type="text" id="filter" size="85">
     <ul id="flats_list">
