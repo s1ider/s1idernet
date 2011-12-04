@@ -2,16 +2,26 @@
 from datetime import datetime, date
 import urllib
 import xlrd
+import json
 from django.template.response import TemplateResponse
-from flats.models import ObjectsHistory
+from django.conf import settings
+from flats.models import FlatsNumber, Buildings
 
 def show_chart(request):
-    if not ObjectsHistory.objects.filter(date=date(2011, 12, 3)):
-        objects = process_xls()
+    if not FlatsNumber.objects.filter(date=datetime.today().date()):
+        buildings = process_xls()
     else:
-        objects = ObjectsHistory.objects.order_by('object_name')
-    names = set(x.object_name for x in objects)
-    return TemplateResponse(request, 'flats.html', {'objects' : objects, 'names' : names})
+        buildings = {}
+        buildings_list = Buildings.objects.all()
+        for building in buildings_list:
+            flats = FlatsNumber.objects.get(building=building)
+            buildings[building.name] = (flats.one_room, flats.two_rooms, flats.three_rooms, flats.four_or_more_rooms)
+
+    names = []
+    for id, name in Buildings.objects.values_list():
+        names.append(name)
+
+    return TemplateResponse(request, 'flats.html', {'names': names, 'buildings': json.dumps(buildings)})
 
 def process_xls():
     prices_local_path = './flats/prices.xls'
@@ -30,24 +40,31 @@ def process_xls():
 
     buildings = {}
     name = ''
-    flats_counter = 0
+    (one_room_counter, two_rooms_counter, three_rooms_counter, four_or_more_rooms_counter) = (0, 0, 0, 0)
     for row in prices:
         if row[1]:
-            buildings[name] = flats_counter
+            buildings[name] = (one_room_counter, two_rooms_counter, three_rooms_counter, four_or_more_rooms_counter)
             name = row[1]
-            flats_counter = 0
-        else:
-            flats_counter += 1
+            (one_room_counter, two_rooms_counter, three_rooms_counter, four_or_more_rooms_counter) = (0, 0, 0, 0)
+        if row[6] == 1:
+            one_room_counter += 1
+        elif row[6] == 2:
+            two_rooms_counter += 1
+        elif row[6] == 3:
+            three_rooms_counter += 1
+        elif row[6] >= 4 and row[2] != u'Разом:':
+            four_or_more_rooms_counter += 1
     del buildings['']
 
-#    print datetime.today(), datetime.now()
     for building in buildings.keys():
-#        print building, buildings[building]
-        if not ObjectsHistory.objects.filter(
-                object_name=building,
-                date=datetime.today()
-                ):
+        today_date = datetime.today().date()
+        if not FlatsNumber.objects.filter(building=Buildings.objects.filter(name=building),
+                                          date=today_date):
             print "Saving %s" % building
-            ObjectsHistory.objects.create(object_name=building.encode('utf-8'), flats_count=buildings[building], date=datetime.now().date())
-
+            building_model = Buildings.objects.filter(name=building)
+            if not building_model:
+                building_model = Buildings.objects.create(name=building)
+            FlatsNumber.objects.create(building=building_model, one_room=buildings[building][0], two_rooms=buildings[building][1],
+                                       three_rooms=buildings[building][2], four_or_more_rooms=buildings[building][3],
+                                       date=today_date)
     return buildings

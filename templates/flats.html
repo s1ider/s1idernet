@@ -18,8 +18,8 @@
             }
         ];
 
-{#        var data_objects = JSON.parse('{{ objects|escapejs }}');#}
-        $.plot($("#chart"), data);
+        var data_objects = JSON.parse('{{ buildings|escapejs }}');
+        console.log(data_objects);
 
         var rows = $('#flats_list li a');
         $('#filter').bind('keyup', function(event) {
@@ -27,7 +27,7 @@
             filter = function(text) {
                 return function() {
                     var a = $(this);
-                    a.parent()[(a.html().toLowerCase().indexOf(text) == 0 || a.hasClass('active')) ? 'show' : 'hide']();
+                    a.parent()[(a.html().toLowerCase().indexOf(text) == 0 || a.hasClass('active')) ? 'show' : 'hide'](speed=300);
                 };
             };
             rows.each(filter(text));
@@ -37,6 +37,45 @@
             event.preventDefault();
             $(this).toggleClass('active');
         });
+
+        rows.click(plotFlats);
+
+        function plotFlats() {
+            var data = [];
+            rows.filter('.active').each(function() {
+                var key = $(this).html();
+                console.log(key);
+                if (key && data_objects[key]) {
+                    console.log(data_objects[key]);
+                    var plot_data = {
+                        label: key,
+                        data: prepare_plot_data(data_objects[key]),
+                        bars: { show: true }
+                    };
+                    data.push(plot_data);
+                }
+            });
+
+            if (data.length > 0) {
+                $.plot($("#chart"), data, {
+                    yaxis: { min: 0 },
+                    xaxis: { tickDecimals: 0 }
+                });
+            }
+        }
+
+        function prepare_plot_data(data) {
+            var prepared_date = [];
+
+
+            for (var i=0; i<data.length; i++) {
+                prepared_date.push([i, data[i]]);
+            }
+            console.log(prepared_date);
+//            prepared_date = [[0, 3], [4, 8], [8, 5], [9, 13]];
+            return prepared_date
+        }
+
     });
 
 
@@ -50,7 +89,7 @@
 
     <div id="chart"></div>
     <p>&nbsp;</p>
-    <input type="text" id="filter" size="85">
+    <label for="filter"></label><input type="text" id="filter" size="85">
     <ul id="flats_list">
         {%  for name in names %}
         <li><a href="#" class="address_link">{{ name }}</a></li>

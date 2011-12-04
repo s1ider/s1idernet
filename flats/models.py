@@ -12,5 +12,21 @@ class ObjectsHistory(models.Model):
     flats_count = models.IntegerField()
     date = models.DateField()
 
+class Buildings(models.Model):
+    name = models.CharField(max_length=200)
+
     def __unicode__(self):
-        return '%s | %s | %s' % (self.object_name, self.flats_count, self.date)
+        return self.name
+
+class FlatsNumber(models.Model):
+    building = models.ForeignKey(Buildings)
+    one_room = models.IntegerField()
+    two_rooms = models.IntegerField()
+    three_rooms = models.IntegerField()
+    four_or_more_rooms = models.IntegerField()
+    date = models.DateField()
+
+    def __unicode__(self):
+        return '%s | %s | %s | %s | %s | %s' % (self.building.name, self.one_room,
+                                                self.two_rooms, self.three_rooms,
+                                                self.four_or_more_rooms, self.date)
