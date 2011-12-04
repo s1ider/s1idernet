@@ -395,3 +395,6 @@ textarea:focus {
 .address_link.active {
     background-color: #777;
 }
+
+#flats_list li {list-style: none}
+.address_link {padding: 3px; border-radius: 3px}
